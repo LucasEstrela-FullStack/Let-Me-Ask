@@ -30,6 +30,13 @@ Este projeto é o backend do Let Me Ask, uma aplicação para perguntas e respos
    npm run dev
    ```
 
+## Endpoints
+
+A API estará em `http://localhost:3333`
+
+- `GET /health ` - Health da Aplicação se está ok
+- `GET /rooms ` - Lista Salas Disponíveis
+
 O backend estará disponível em `http://localhost:3333`.
 
 ## Estrutura
