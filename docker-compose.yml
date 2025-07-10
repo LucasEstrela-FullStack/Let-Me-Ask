@@ -1,0 +1,11 @@
+services:
+  Let-Me-Ask-pg:  # Buscar por similaridade exemplo ("TypeScript") mas busco no banco de dados as similaridades
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: LetMeAsk
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
