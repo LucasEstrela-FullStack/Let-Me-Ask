@@ -1,0 +1,1 @@
+ALTER TABLE "rooms" ALTER COLUMN "description" DROP NOT NULL;
