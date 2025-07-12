@@ -3,6 +3,7 @@ import { serializerCompiler, validatorCompiler, type ZodTypeProvider} from 'fast
 import { fastifyCors } from '@fastify/cors'
 import { env } from './env.ts';
 import { getRoomsRoute } from './http/routes/get-rooms.ts';
+import { createQuestionRoute } from './http/routes/create-question.ts';
 import { createRoomRoute } from './http/routes/create-room.ts';
 import { getRoomsQuestions } from './http/routes/get-room-questions.ts';
 
@@ -14,6 +15,7 @@ app.register(fastifyCors, {
 
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler)
+
 app.get('/health', () => {
     return 'OK'
 })
@@ -21,6 +23,7 @@ app.get('/health', () => {
 app.register(getRoomsRoute)
 app.register(createRoomRoute)
 app.register(getRoomsQuestions)
+app.register(createQuestionRoute)
 
 app.listen({port: env.PORT}).then(() => {
   console.log('HTTP Server running!!!')
