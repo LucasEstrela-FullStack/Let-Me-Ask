@@ -30,7 +30,19 @@ export const uploadAudioRoute: FastifyPluginCallbackZod = (app) => {
         const transcription = await transcribeAudio(audioAsBase64, audio.mimetype)
         const embeddings = await generateEmbeddings (transcription)
 
-        return { transcription, embeddings }
+        const result = await db.insert(schema.audioChunks).values({
+          roomId,
+          transcription,
+          embeddings
+        }).returning()
+
+        const chunk = result[0]
+
+        if (!chunk) {
+          throw new Error('Error ao salvar o chunk de áudio.')
+        }
+
+        return reply.status(201).send({ chunkId: chunk.id })
 
         // 1. Transcrever o Audio utilizando geminiIA
         // 2. Gerar vetor semântico/ embeddings do texto transcrito

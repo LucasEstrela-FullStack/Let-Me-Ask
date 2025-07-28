@@ -45,3 +45,39 @@ export async function generateEmbeddings(text: string) {
 
   return response.embeddings[0].values
 }
+
+export async function generateAnswer(question: string, transcriptions: string[]) {
+  const context = transcriptions.join('\n\n')
+
+  const prompt = `
+  Você é um assistente virtual que responde perguntas com base em transcrições de áudio, com base no texto fornecido abaixo como contexto, responda a pergunta de forma clara e com precisão utilizando o Português PT-br.
+  
+  CONTEXTO:
+  ${context}
+
+  PERGUNTA:
+  ${question}
+
+  INSTRUÇÕES:
+  - Responda a pergunta de forma clara e objetiva, utilizando o contexto fornecido. Se a resposta não estiver presente no contexto, diga que não sabe ou que não tem informações suficientes;
+  - Responda apenas com o texto, sem formatação ou marcação adicional;
+  - Seja objetivo;
+  - Cite trechos relevantes do contexto se apropriados;
+  - Se for citar o contexto, utilize o temo "conteúdo da aula";
+  `.trim()
+
+  const response = await gemini.models.generateContent({
+    model,
+    contents: [
+      {
+        text: prompt,
+      }
+    ]
+  })
+
+  if (!response.text) {
+    throw new Error('Falha ao gerar resposta com o Gemini');
+  }
+
+  return response.text
+}

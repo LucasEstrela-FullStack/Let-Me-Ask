@@ -37,9 +37,9 @@ GET {{baseUrl}}/rooms/{{roomId}}/questions
 
 # Create question
 # @name createQuestion
-POST {{baseUrl}}/rooms/{{roomId}}/questions
+POST {{baseUrl}}/rooms/bb069df3-464e-4b0f-b183-0f986643bee7/questions
 Content-Type: application/json
 
 {
-  "question": "Qual o conceito de Rede Neural?"
+  "question": "O que é Typescript?"
 }
